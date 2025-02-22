@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Currency Converter - PremiumTools</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .tool-container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .tool-container h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .tool-container input,
+    .tool-container select,
+    .tool-container button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .tool-container button {
+      background-color: #3498db;
+      color: #fff;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .tool-container button:hover {
+      background-color: #2980b9;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="tool-container">
+    <h2>Currency Converter</h2>
+    <input type="number" id="amount" placeholder="Enter amount">
+    <select id="from-currency"></select>
+    <select id="to-currency"></select>
+    <button onclick="convertCurrency()">Convert</button>
+    <p id="result"></p>
+  </div>
+  <script>
+    const fromCurrency = document.getElementById('from-currency');
+    const toCurrency = document.getElementById('to-currency');
+    const amount = document.getElementById('amount');
+    const result = document.getElementById('result');
+
+    // Fetch currencies from API
+    fetch('https://api.exchangerate-api.com/v4/latest/USD')
+      .then(response => response.json())
+      .then(data => {
+        const currencies = Object.keys(data.rates);
+        currencies.forEach(currency => {
+          const option1 = document.createElement('option');
+          const option2 = document.createElement('option');
+          option1.value = currency;
+          option2.value = currency;
+          option1.text = currency;
+          option2.text = currency;
+          fromCurrency.appendChild(option1);
+          toCurrency.appendChild(option2);
+        });
+      });
+
+    function convertCurrency() {
+      const from = fromCurrency.value;
+      const to = toCurrency.value;
+      const amt = amount.value;
+
+      fetch(`https://api.exchangerate-api.com/v4/latest/${from}`)
+        .then(response => response.json())
+        .then(data => {
+          const rate = data.rates[to];
+          const convertedAmount = (amt * rate).toFixed(2);
+          result.textContent = `${amt} ${from} = ${convertedAmount} ${to}`;
+        });
+    }
+  </script>
+</body>
+</html>
