@@ -3,9 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PremiumTools</title>
+  <title>PremiumTools - Your All-in-One Toolkit for Productivity, Design, and Development</title>
+  <meta name="description" content="Explore PremiumTools, your ultimate toolkit for productivity, design, and development. Convert currencies, generate color palettes, and more!">
+  <meta name="keywords" content="premium tools, productivity tools, design tools, development tools, currency converter, color palette generator">
+  <meta name="author" content="PremiumTools">
+  <link rel="canonical" href="https://www.premiumtools.com">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="PremiumTools - Your All-in-One Toolkit">
+  <meta property="og:description" content="Explore PremiumTools, your ultimate toolkit for productivity, design, and development.">
+  <meta property="og:image" content="https://www.premiumtools.com/images/og-image.jpg">
+  <meta property="og:url" content="https://www.premiumtools.com">
+  <meta property="og:type" content="website">
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="PremiumTools - Your All-in-One Toolkit">
+  <meta name="twitter:description" content="Explore PremiumTools, your ultimate toolkit for productivity, design, and development.">
+  <meta name="twitter:image" content="https://www.premiumtools.com/images/og-image.jpg">
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "PremiumTools",
+      "url": "https://www.premiumtools.com",
+      "description": "Your ultimate toolkit for productivity, design, and development.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://www.premiumtools.com/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+  </script>
   <style>
     /* General Styles */
     body {
@@ -196,8 +226,8 @@
       </ul>
     </nav>
     <div class="search-bar">
-      <input type="text" placeholder="Search tools...">
-      <button>Search</button>
+      <input type="text" id="search-input" placeholder="Search tools...">
+      <button onclick="searchTools()">Search</button>
     </div>
   </header>
 
@@ -214,11 +244,11 @@
     <div class="category">
       <h3>Productivity Tools</h3>
       <div class="tool-cards">
-        <div class="card animate__animated animate__fadeInUp" onclick="window.location.href='currency-converter.html'">
+        <div class="card animate__animated animate__fadeInUp" data-search="currency converter" onclick="window.location.href='currency-converter.html'">
           <h4>Currency Converter</h4>
           <p>Convert currencies in real-time.</p>
         </div>
-        <div class="card animate__animated animate__fadeInUp" onclick="window.location.href='time-zone-converter.html'">
+        <div class="card animate__animated animate__fadeInUp" data-search="time zone converter" onclick="window.location.href='time-zone-converter.html'">
           <h4>Time Zone Converter</h4>
           <p>Convert time zones effortlessly.</p>
         </div>
@@ -227,11 +257,11 @@
     <div class="category">
       <h3>Design Tools</h3>
       <div class="tool-cards">
-        <div class="card animate__animated animate__fadeInUp" onclick="window.location.href='color-palette.html'">
+        <div class="card animate__animated animate__fadeInUp" data-search="color palette generator" onclick="window.location.href='color-palette.html'">
           <h4>Color Palette Generator</h4>
           <p>Generate beautiful color schemes.</p>
         </div>
-        <div class="card animate__animated animate__fadeInUp" onclick="window.location.href='font-pairing.html'">
+        <div class="card animate__animated animate__fadeInUp" data-search="font pairing tool" onclick="window.location.href='font-pairing.html'">
           <h4>Font Pairing Tool</h4>
           <p>Find the perfect font combinations.</p>
         </div>
@@ -248,5 +278,22 @@
       <a href="#">LinkedIn</a>
     </div>
   </footer>
+
+  <!-- Search Functionality -->
+  <script>
+    function searchTools() {
+      const searchInput = document.getElementById('search-input').value.toLowerCase();
+      const cards = document.querySelectorAll('.card');
+
+      cards.forEach(card => {
+        const toolName = card.getAttribute('data-search').toLowerCase();
+        if (toolName.includes(searchInput)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
 </body>
 </html>
